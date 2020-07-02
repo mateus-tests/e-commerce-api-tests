@@ -10,7 +10,7 @@ import OrdersRoutes from './routes/OrdersRoutes';
 import AuthRoutes from './routes/AuthRoutes';
 import cors from 'cors';
 import passport from 'passport';
-import '../config/getEnv';
+//import '../config/getEnv';
 
 const app = express();
 
@@ -30,4 +30,4 @@ app.use('/auth', AuthRoutes);
 
 app.use('/uploads', express.static(path.resolve(__dirname, '..', 'uploads')));
 
-app.listen(3333);
+app.listen(process.env.PORT || 3333);
