@@ -7,7 +7,6 @@ const connection_1 = __importDefault(require("../src/database/connection"));
 const passport_1 = __importDefault(require("passport"));
 const passport_google_oauth20_1 = __importDefault(require("passport-google-oauth20"));
 const passport_facebook_1 = __importDefault(require("passport-facebook"));
-require("./getEnv");
 passport_1.default.serializeUser((user, done) => {
     done(null, user.id);
 });
