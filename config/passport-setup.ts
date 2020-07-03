@@ -40,10 +40,12 @@ passport.use(
                 email: profile._json.sub,
                 profile_picture: profile._json.picture, 
             }
-            const ids = await knex('users').insert(newUser);
-            const id = Number(ids[0]);
-            console.log(JSON.stringify({ ...newUser, id : id }) );
-            done(null, { ...newUser, id : id });
+            await knex('users').insert(newUser);
+            const user_included = await knex('users')
+                                        .where('email', profile._json.sub)
+                                        .first();
+            console.log(JSON.stringify(user_included) );
+            done(null, user_included);
         }
         else {
             //already have the user
