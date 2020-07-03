@@ -8,7 +8,7 @@ const utils = new Utils();
 
 import jwt from 'jsonwebtoken';
 
-import '../../config/getEnv';
+//import '../../config/getEnv';
 
 type User = {
     id : number;
@@ -44,8 +44,12 @@ export default class AuthServices{
 
     socialAuthenticate ({request, response} : {request : Request, response : Response}) {
         const user  = request.user as User;
+        
         const token = jwt.sign( { id : user.id }, String(process.env.APP_SECRET_KEY), { expiresIn : '30d' } );
         
+        console.log(process.env.APP_SECRET_KEY);
+        console.log(user.id);
+
         delete user.password;
 
         return response.json({
