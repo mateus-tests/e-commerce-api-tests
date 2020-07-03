@@ -14,15 +14,11 @@ type User = {
     profile_picture: string; 
 };
 
-passport.serializeUser( (user : User, done) => {
-    done(null, user.id);
+passport.serializeUser( (user, done) => {
+    done(null, user);
 });
 
-passport.deserializeUser( async (id : number, done) => {
-    const user = await knex('users')
-                        .where('id', id)
-                        .first();
-    
+passport.deserializeUser((user, done) => {
     done(null, user);
 });
 passport.use(
@@ -46,11 +42,12 @@ passport.use(
             }
             const ids = await knex('users').insert(newUser);
             const id = Number(ids[0]);
-            
-            done(null, { ...newUser, id });
+            console.log(JSON.stringify({ ...newUser, id : id }) );
+            done(null, { ...newUser, id : id });
         }
         else {
             //already have the user
+            console.log(JSON.stringify(user) );
             done(null, user);
         }
     })
