@@ -38,10 +38,10 @@ export default class UsersServices {
     }
     async profile({request, response} : {request : Request, response : Response}) {
         
-        const user = await knex('users')
+        /*const user = await knex('users')
                                 .where('id', request.userId)
-                                .first();
-        return response.json(request.userId);
+                                .first();*/
+        return response.json({ id : String(request.userId) });
     }
     async store ({ request, response } : { request : Request, response : Response }){
         const { email, password, userName, profile_picture_url } = request.body;
