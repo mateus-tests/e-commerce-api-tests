@@ -41,7 +41,7 @@ export default class UsersServices {
         /*const user = await knex('users')
                                 .where('id', request.userId)
                                 .first();*/
-        return response.json({ id : String(request.userId) });
+        return response.json({ id : "iooi" });
     }
     async store ({ request, response } : { request : Request, response : Response }){
         const { email, password, userName, profile_picture_url } = request.body;
