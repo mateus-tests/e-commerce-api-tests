@@ -20,8 +20,8 @@ app.use(express.json());
 
 app.use(passport.initialize());
 
-app.use('/users', UsersRoutes );
-app.use('/items', ItemsRoutes );
+app.use('/users', UsersRoutes);
+app.use('/items', ItemsRoutes);
 app.use('/points', PointsRoutes);
 app.use('/categories', CategoriesRoutes);
 app.use('/products', ProductsRoutes);
