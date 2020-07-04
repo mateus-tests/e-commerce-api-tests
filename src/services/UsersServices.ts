@@ -37,11 +37,11 @@ export default class UsersServices {
             response.status(404).send('Not Found');        
     }
     async profile({request, response} : {request : Request, response : Response}) {
-        console.log(request.userId);
+        
         const user = await knex('users')
                                 .where('id', request.userId)
                                 .first();
-        return response.json(user);
+        return response.json(request.userId);
     }
     async store ({ request, response } : { request : Request, response : Response }){
         const { email, password, userName, profile_picture_url } = request.body;
