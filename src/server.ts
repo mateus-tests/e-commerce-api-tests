@@ -8,6 +8,7 @@ import CategoriesRoutes from './routes/CategoriesRoutes';
 import ProductsRoutes from './routes/ProductsRoutes';
 import OrdersRoutes from './routes/OrdersRoutes';
 import AuthRoutes from './routes/AuthRoutes';
+import ProfileRoutes from './routes/ProfileRoutes';
 import cors from 'cors';
 import passport from 'passport';
 //import '../config/getEnv';
@@ -27,6 +28,7 @@ app.use('/categories', CategoriesRoutes);
 app.use('/products', ProductsRoutes);
 app.use('/orders', OrdersRoutes);
 app.use('/auth', AuthRoutes);
+app.use('/profile', ProfileRoutes);
 
 app.use('/uploads', express.static(path.resolve(__dirname, '..', 'uploads')));
 
