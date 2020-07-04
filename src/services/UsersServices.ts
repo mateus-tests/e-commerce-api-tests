@@ -21,7 +21,7 @@ export default class UsersServices {
     async index ({ request, response }: { request: Request; response: Response; }) {
         const retrieveUsers = await knex('users')
                                         .select('*');
-        return response.json(retrieveUsers);
+        return response.json({retrieveUsers, if : request.userId});
         
         /*const { search } = request.query;
         response.json( search === undefined ? 
