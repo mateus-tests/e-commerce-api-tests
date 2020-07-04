@@ -12,7 +12,7 @@ routes.get('', authMiddleware, usersController.index);
 
 routes.get('/:id', usersController.show);
 
-routes.get('/profile', authMiddleware, usersController.profile);
+
 
 routes.post('', usersController.store);
 

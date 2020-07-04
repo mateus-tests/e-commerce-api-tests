@@ -11,9 +11,7 @@ export default class UsersController{
     show (request : Request, response : Response){
         usersServices.show({ request, response });
     }
-    profile(request : Request, response : Response) {
-        usersServices.profile({request, response});
-    }
+    
     store (request : Request, response : Response){
         usersServices.store({request, response});
     }
