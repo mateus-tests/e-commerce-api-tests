@@ -37,6 +37,7 @@ export default class UsersServices {
             response.status(404).send('Not Found');        
     }
     async profile({request, response} : {request : Request, response : Response}) {
+        console.log(request.userId);
         const user = await knex('users')
                                 .where('id', request.userId)
                                 .first();
