@@ -7,8 +7,10 @@ export async function seed(knex : Knex){
         image_3 : 'banner3.png'
     }
     await knex('products').select('*').del();
+    await knex('categories_products').select('*').del();
 
     const trx = await knex.transaction();
+    
 
     const insertedIds = await trx('products').insert([
         { 
