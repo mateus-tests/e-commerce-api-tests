@@ -47,13 +47,24 @@ export default class ProductServices{
     }
     async destroy ({request, response} : { request : Request, response : Response }){
         const { product_id } = request.params;
-        const retrieveId = await   knex('products')
-            .where('id', product_id)
-            .del();
-        if(retrieveId === 0){
+        try {
+            await   knex('products')
+                .where('id', product_id)
+                .del();
+            return response.status(200).send();
+        } catch {
             return response.status(404).send();
         }
-        return response.status(200).send();
+    }
+    async destroyAll({request, response} : { request : Request, response : Response }){
+        try {
+            await  knex('products')
+                .select('*')
+                .del();
+            return response.status(200).send();
+        } catch {
+            return response.status(404).send();
+        }
     }
     async update ({request, response} : {request : Request, response : Response}){
         const { product_id } = request.params;

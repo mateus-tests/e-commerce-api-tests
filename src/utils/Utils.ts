@@ -41,10 +41,7 @@ export default class Utils{
         const url = request.protocol + '://' + request.get('host');
         return url;
     }
-    decryptToken (authorization : string) {
-        //decypting...
-        return authorization;
-    }
+    
 
     passwordEncrypt (password : string) : string {
         return bcrypt.hashSync(password, 8);

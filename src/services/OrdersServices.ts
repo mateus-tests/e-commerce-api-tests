@@ -12,14 +12,11 @@ const utils = new Utils();
 
 export default class OrdersServices {
     async index ({request, response} : { request : Request, response : Response }) {
-        const { authorization } = request.headers;
-        const user_id = utils.decryptToken(String(authorization));
-        if(!user_id){
-            response.status(404).send();
-        }
+        const { userId } = request;
+        
         const retrieveProducts = await knex('products')
             .join('orders','products.id', '=', 'orders.product_id')
-            .where('orders.user_id', user_id)
+            .where('orders.user_id', userId)
             .distinct()
             .select('products.*');
         const total = utils.getFinalPrice(retrieveProducts);
@@ -29,19 +26,18 @@ export default class OrdersServices {
         });
     }
     async create ({request, response} : { request : Request, response : Response }){
-        const { authorization } = request.headers;
+        const { userId } = request;
         const { product_id } = request.body;
-        const user_id = utils.decryptToken(String(authorization));
         const retrieveProduct = await knex('products')
                                     .where('id', product_id)
                                     .first();
         const status = "selected"
-        if(!retrieveProduct || !user_id){
+        if(!retrieveProduct){
             response.status(404).send();
         }
         const order = {
             product_id,
-            user_id,
+            user_id : userId,
             status
         }
         await knex('orders').insert(order);
@@ -50,16 +46,12 @@ export default class OrdersServices {
     }
     async destroy({request, response} : { request : Request, response : Response }){
         const { order_id } = request.params;
-        const { authorization } = request.headers;
-        const user_id = utils.decryptToken(String(authorization));
-        if(!user_id){
-            response.status(404).send();
-        }
+        const { userId } = request;
         const retrieveOrder = await knex('orders')
                                         .where('id', order_id)
                                         .first();
         
-        if(!retrieveOrder || String(retrieveOrder.user_id) !== user_id){
+        if(!retrieveOrder || String(retrieveOrder.user_id) !== userId){
             return response.status(401).send();
         }
         await knex('orders')
@@ -70,16 +62,12 @@ export default class OrdersServices {
 
     async update({request, response} : { request : Request, response : Response }){
         const { order_id } = request.params;
-        const { authorization } = request.headers;
-        const user_id = utils.decryptToken(String(authorization));
-        if(!user_id){
-            response.status(404).send();
-        }
+        const { userId } = request;
         const retrieveOrder = await knex('orders')
                                         .where('id', order_id)
                                         .first();
         
-        if(!retrieveOrder || String(retrieveOrder.user_id) !== user_id){
+        if(!retrieveOrder || String(retrieveOrder.user_id) !== userId){
             return response.status(401).send();
         }
         await knex('orders')
@@ -88,22 +76,18 @@ export default class OrdersServices {
         return response.status(200).send();
     }
     async payment({request, response} : {request : Request, response : Response}){
-        const { authorization } = request.headers;
-        const user_id = utils.decryptToken(String(authorization));
+        const { userId } = request;
         MercadoPago.configure({
             sandbox: process.env.SANDBOX == 'true' ? true : false,
             access_token: process.env.MP_ACCESS_TOKEN
         });
-        if(!user_id){
-            response.status(404).send();
-        }
         const { email, id } = await knex('users')
-                                .where('id', user_id)
+                                .where('id', userId)
                                 .first();
         
         const retrieveProducts = await knex('products')
             .join('orders','products.id', '=', 'orders.product_id')
-            .where('orders.user_id', user_id)
+            .where('orders.user_id', userId)
             .distinct()
             .select('products.*');
         
