@@ -62,7 +62,7 @@ export default class ProductServices{
             return response.status(404).send();
         }
         try {
-            await knex('categories').where('id', '>', Number(id)).del();
+            await knex('products').where('id', '>', Number(id)).del();
             return response.status(200).send();
         } catch {
             return response.status(404).send();
