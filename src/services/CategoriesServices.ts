@@ -16,12 +16,13 @@ export default class CategoriesServices{
         }
         try {
             await knex('categories').where('id', '>', Number(id)).del();
+            await knex('categories_products').where('id', '>', Number(id)).del();
             return response.status(200).send();
         } catch {
             return response.status(404).send();
         }
-        
     }
+    
     async update({request, response} : {request : Request, response : Response}){
         const { id } = request.params;
         const { title, category_image_url, image_offers_url } = request.body;
