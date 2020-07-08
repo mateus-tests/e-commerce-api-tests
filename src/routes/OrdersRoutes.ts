@@ -4,13 +4,15 @@ import OrdersController from '../controllers/OrdersController';
 
 const ordersController = new OrdersController();
 
+import authMiddleware from '../middlewares/authMiddleware'
+
 const routes = Router();
 
-routes.get('', ordersController.index);
-routes.post('', ordersController.create);
-routes.delete('/:order_id', ordersController.destroy);
-routes.put('/:order_id', ordersController.update);
-routes.get('/payments', ordersController.payment);
+routes.get('', authMiddleware, ordersController.index);
+routes.post('', authMiddleware,  ordersController.create);
+routes.delete('/:order_id', authMiddleware, ordersController.destroy);
+routes.put('/:order_id', authMiddleware,  ordersController.update);
+routes.get('/payments', authMiddleware,  ordersController.payment);
 
 routes.get('/payments/success', (request, response) => {
     response.json({status : 'success'});

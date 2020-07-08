@@ -6,7 +6,7 @@ export async function seed(knex : Knex){
         image_2 : 'banner2.png',
         image_3 : 'banner3.png'
     }
-    
+    await knex('categories').select('*').del();
     await knex('categories').insert([
         { 
             title : 'Lâmpadas',

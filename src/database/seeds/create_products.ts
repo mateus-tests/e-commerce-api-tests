@@ -6,9 +6,11 @@ export async function seed(knex : Knex){
         image_2 : 'banner2.png',
         image_3 : 'banner3.png'
     }
+    await knex('products').select('*').del();
+
     const trx = await knex.transaction();
 
-    await trx('products').insert([
+    const insertedIds = await trx('products').insert([
         { 
             title : 'Lâmpada Led',
             main_image_url : 'lampadas.svg', 
@@ -72,31 +74,33 @@ export async function seed(knex : Knex){
         },
     ]);
 
+    console.log(insertedIds);
+
     await trx('categories_products').insert([
         { 
             categorie_id : 1,
-            product_id : 1
+            product_id : insertedIds[0]
         },
         { 
             categorie_id : 3,
-            product_id : 2
+            product_id : insertedIds[1]
         },
         
         { 
             categorie_id : 4,
-            product_id : 3
+            product_id : insertedIds[2]
         },
         { 
             categorie_id : 5,
-            product_id : 4
+            product_id : insertedIds[3]
         },
         { 
             categorie_id : 1,
-            product_id : 5
+            product_id : insertedIds[4]
         },
         { 
             categorie_id : 1,
-            product_id : 6
+            product_id : insertedIds[5]
         },
     ]);
 

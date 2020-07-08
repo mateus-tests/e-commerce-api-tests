@@ -14,6 +14,9 @@ export default class ProductsController {
     destroy (request : Request, response : Response) {
         productsServices.destroy({request, response});
     }
+    destroyAll (request : Request, response : Response) {
+        productsServices.destroyAll({request, response});
+    }
     update (request : Request, response : Response) {
         productsServices.update({request, response});
     }
