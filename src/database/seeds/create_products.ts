@@ -78,30 +78,29 @@ export async function seed(knex : Knex){
     console.log(insertedIds);
 
     await trx('categories_products').insert([
-        { 
-            categorie_id : 1,
-            product_id : insertedIds[0]
+        {
+            categorie_id: 1,
+            product_id: 1
         },
-        { 
-            categorie_id : 3,
-            product_id : insertedIds[1]
+        {
+            categorie_id: 3,
+            product_id: 2
         },
-        
-        { 
-            categorie_id : 4,
-            product_id : insertedIds[2]
+        {
+            categorie_id: 4,
+            product_id: 3
         },
-        { 
-            categorie_id : 5,
-            product_id : insertedIds[3]
+        {
+            categorie_id: 5,
+            product_id: 4
         },
-        { 
-            categorie_id : 1,
-            product_id : insertedIds[4]
+        {
+            categorie_id: 1,
+            product_id: 5
         },
-        { 
-            categorie_id : 1,
-            product_id : insertedIds[5]
+        {
+            categorie_id: 1,
+            product_id: 6
         },
     ]);
 

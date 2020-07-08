@@ -57,10 +57,12 @@ export default class ProductServices{
         }
     }
     async destroyAll({request, response} : { request : Request, response : Response }){
+        const { id } = request.query;
+        if(!id){
+            return response.status(404).send();
+        }
         try {
-            await  knex('products')
-                .select('*')
-                .del();
+            await knex('categories').where('id', '>', Number(id)).del();
             return response.status(200).send();
         } catch {
             return response.status(404).send();

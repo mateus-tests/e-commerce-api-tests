@@ -6,7 +6,8 @@ const routes = Router();
 
 const categoriesController = new CategoriesController();
 
-routes.get('', categoriesController.index);//
+routes.get('', categoriesController.index);
+routes.delete('', categoriesController.destroy);
 routes.put('/:id', categoriesController.update);
 routes.get('/:id', categoriesController.show);
 
