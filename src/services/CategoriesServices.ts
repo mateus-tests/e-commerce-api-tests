@@ -57,15 +57,17 @@ export default class CategoriesServices{
     }
     async retrieveCategories({request, response} : {request : Request, response : Response}){
         const { products_id_string } = request.query;
-        if(!products_id_string) {
-            return response.status(404).send();
-        }
-        const products_ids = utils.stringToNumberArray(String(products_id_string));
-
         try{
+            if(!products_id_string) {
+                return response.status(404).send();
+            }
+            const products_ids = utils.stringToNumberArray(String(products_id_string));
+
+        
             const categorieRetrieved = await knex('categories')
                         .join('categories_products', 'categories.id', '=', 'categories_products.categorie_id')
                         .whereIn('categories_products.product_id', products_ids)
+                        .distinct()
                         .select('categories.*');
             return response.json(categorieRetrieved);
         } catch {
