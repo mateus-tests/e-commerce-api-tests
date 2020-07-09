@@ -10,6 +10,6 @@ routes.get('', categoriesController.index);
 routes.delete('', categoriesController.destroy);
 routes.put('/:id', categoriesController.update);
 routes.get('/:id', categoriesController.show);
-routes.get('/products', categoriesController.retrieveCategories);
+routes.get('/by/productsids', categoriesController.categoriesByProductId);
 
 export default routes;
