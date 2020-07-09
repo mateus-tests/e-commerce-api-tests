@@ -54,4 +54,18 @@ export default class CategoriesServices{
                 .first();
         response.json(retrieveCategorie);
     }
+    async retrieveCategorie({request, response} : {request : Request, response : Response}){
+        const { product_id } = request.params;
+
+        try{
+            const categorieRetrieved = await knex('categories')
+                        .join('categories_products', 'categories.id', '=', 'categories_products.categorie_id')
+                        .where('categories_products.product_id', product_id)
+                        .first()
+                        .select('categories.*');
+            return response.json({categorie : categorieRetrieved});
+        } catch {
+            return response.status(404).send();
+        }
+    }
 }
