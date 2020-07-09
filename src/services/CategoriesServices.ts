@@ -58,11 +58,8 @@ export default class CategoriesServices{
     async retrieveCategories({request, response} : {request : Request, response : Response}){
         const { products_id_string } = request.query;
         try{
-            if(!products_id_string) {
-                return response.status(404).send();
-            }
+            
             const products_ids = utils.stringToNumberArray(String(products_id_string));
-            console.log(products_id_string);
 
         
             const categorieRetrieved = await knex('categories')
