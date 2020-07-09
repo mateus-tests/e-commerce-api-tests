@@ -56,17 +56,17 @@ export default class CategoriesServices{
         response.json(retrieveCategorie);
     }
     async retrieveCategories({request, response} : {request : Request, response : Response}){
-        const { products_id_string } = request.query;
+        const { products } = request.query;
         try{
             
-            const products_ids = utils.stringToNumberArray(String(products_id_string));
+            const products_ids = utils.stringToNumberArray(String(products));
 
         
             const categorieRetrieved = await knex('categories')
                         .join('categories_products', 'categories.id', '=', 'categories_products.categorie_id')
                         .whereIn('categories_products.product_id', products_ids)
-                        .distinct()
-                        .select('categories.*');
+                        .distinct();
+                        
             return response.json(categorieRetrieved);
         } catch {
             return response.status(404).send();
