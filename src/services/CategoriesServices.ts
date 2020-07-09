@@ -3,7 +3,6 @@ import { Request, Response } from 'express';
 import knex from '../database/connection';
 
 import Utils from '../utils/Utils';
-import { doesNotMatch } from 'assert';
 const utils = new Utils();
 
 export default class CategoriesServices{
@@ -56,20 +55,17 @@ export default class CategoriesServices{
                 .first();
         response.json(retrieveCategorie);
     }
-    async retrieveCategories({request, response} : {request : Request, response : Response}){
-        //const { products } = request.query;
-        try {
+    async categoriesByProductId ({request, response} : {request : Request, response : Response}){
+        const { products } = request.query;
             
-            //const products_ids = utils.stringToNumberArray(String(products));
+            const products_ids = utils.stringToNumberArray(String(products));
 
-        
+            
             const categorieRetrieved = await knex('categories')
-                        .where('id', 1)
-                        .first();
-                        
-            return response.json( { categorieRetrieved : categorieRetrieved } );
-        } catch(e) {
-            return response.status(404).send();
-        }
+                        .join('categories_products', 'categories.id', '=', 'categories_products.categorie_id')
+                        .whereIn('categories_products.product_id', products_ids)
+                        .distinct()
+                        .select('categories.*');
+            return response.json(categorieRetrieved);
     }
 }
