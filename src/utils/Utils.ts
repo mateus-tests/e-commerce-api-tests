@@ -19,9 +19,14 @@ export default class Utils{
         return text.trim().toUpperCase();
     }
     stringToNumberArray(text : string){
-        return text.split(',').map( position => {
-            return Number(position.trim());
-        });
+        try {
+            return text.split(',').map( position => {
+                return Number(position.trim());
+            });
+        } catch {
+            return [];
+        }
+        
     }
     receiveProductPagination(products : Product[], page_number : number){
         let index = 0;
