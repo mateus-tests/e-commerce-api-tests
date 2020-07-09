@@ -62,6 +62,7 @@ export default class CategoriesServices{
                 return response.status(404).send();
             }
             const products_ids = utils.stringToNumberArray(String(products_id_string));
+            console.log(products_id_string);
 
         
             const categorieRetrieved = await knex('categories')
