@@ -17,7 +17,7 @@ export default class CategoriesController{
     show (request : Request, response : Response){
         categoriesServices.show({request, response});
     }
-    retrieveCategorie (request : Request, response : Response) {
-        categoriesServices.retrieveCategorie({request, response});
+    retrieveCategories (request : Request, response : Response) {
+        categoriesServices.retrieveCategories({request, response});
     }
 }
