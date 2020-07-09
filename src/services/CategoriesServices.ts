@@ -64,8 +64,8 @@ export default class CategoriesServices{
         
             const categorieRetrieved = await knex('categories')
                         .join('categories_products', 'categories.id', '=', 'categories_products.categorie_id')
-                        .whereIn('categories_products.product_id', products_ids)
-                        .distinct();
+                        .where('categories_products.product_id', 1)
+                        .first();
                         
             return response.json(categorieRetrieved);
         } catch {
