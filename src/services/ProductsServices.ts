@@ -26,6 +26,12 @@ export default class ProductServices{
             .whereIn('categories_products.categorie_id', categories_ids)
             .distinct()
             .select('products.*');
+        if(Number(page_number) === -1){
+            return response.json({
+                products : retrieveProducts, 
+                quantity : retrieveProducts.length
+            });
+        }
         
         const retrieveProductsPage = utils.receiveProductPagination(retrieveProducts, Number(page_number));
 
